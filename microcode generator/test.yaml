@@ -20,7 +20,6 @@ control-signals:
   SCR: 17  # Step counter reset
 
 fetch-sequence:
-  - [000, HLT]
   - [000, SCR]
 
 operations:

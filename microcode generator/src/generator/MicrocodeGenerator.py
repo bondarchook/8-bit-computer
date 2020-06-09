@@ -26,9 +26,11 @@ class MicrocodeGenerator:
         for operation in self.spec.operations:
             print("\n{} ({})".format(operation.name, op_index))
             step_index = 0
-            step_index = self.generate_steps(op_index, step_index, self.spec.fetch_sequence.steps)
+            if self.spec.fetch_sequence is not None:
+                step_index = self.generate_steps(op_index, step_index, self.spec.fetch_sequence.steps)
             step_index = self.generate_steps(op_index, step_index, operation.steps)
-            self.generate_steps(op_index, step_index, self.spec.end_sequence.steps)
+            if self.spec.end_sequence is not None:
+                self.generate_steps(op_index, step_index, self.spec.end_sequence.steps)
             op_index += 1
         self.builder.write()
 

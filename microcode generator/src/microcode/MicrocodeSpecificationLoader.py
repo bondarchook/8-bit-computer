@@ -57,6 +57,7 @@ class MicrocodeSpecificationLoader:
         operation = Operation(name)
 
         if operation_doc is None:
+            print("N/A")
             return None
 
         for s in operation_doc:
