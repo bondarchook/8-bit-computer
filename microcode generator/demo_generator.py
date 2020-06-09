@@ -1,6 +1,7 @@
 import os
 
 from generator.MicrocodeRomBuilder import MicrocodeRomBuilder
+from generator.MicrocodeGenerator import MicrocodeGenerator
 from microcode.MicrocodeSpecificationLoader import MicrocodeSpecificationLoader
 from microcode.MicrocodeSpecificationValidator import MicrocodeSpecificationValidator
 
@@ -34,5 +35,8 @@ s = MicrocodeSpecificationLoader("test.yaml")
 s.load()
 
 MicrocodeSpecificationValidator.validate(s.microcode_specification)
+
+g = MicrocodeGenerator("./hex", "test", s.microcode_specification)
+g.generate()
 
 print('Done.')

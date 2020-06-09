@@ -33,11 +33,11 @@ class MicrocodeBuilder:
         self._romC.set_value(step, flags, opcode, c_part)
 
     def write(self):
-        self.write_file("A", self._romA.data)
-        self.write_file("B", self._romB.data)
-        self.write_file("C", self._romC.data)
+        self._write_file("A", self._romA.data)
+        self._write_file("B", self._romB.data)
+        self._write_file("C", self._romC.data)
 
-    def write_file(self, suffix, data):
+    def _write_file(self, suffix, data):
         file_name = self.base_filename + "_" + suffix + ".hex"
         full_file_name = os.path.join(self.output_directory, file_name)
 
