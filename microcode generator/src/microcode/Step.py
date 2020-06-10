@@ -14,4 +14,5 @@ class Step:
         self.control_word.append(signal)
 
     def __str__(self):
-        return '{}{}{}: {}'.format(str(self.z_flag), str(self.c_flag), str(self.n_flag), ', '.join(self.control_word))
+        control_words = ", ".join(self.control_word)
+        return f'{str(self.z_flag)}{str(self.c_flag)}{str(self.n_flag)}: {control_words}'

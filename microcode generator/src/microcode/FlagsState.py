@@ -15,7 +15,7 @@ class FlagsState(Enum):
             return FlagsState.ONE
         if value == "X":
             return FlagsState.ANY
-        raise ValueError('Can not map "%s" to FlagState. Allowed values "1", "0", "X"' % value)
+        raise ValueError(f'Can not map "{value}" to FlagState. Allowed values "1", "0", "X"')
 
     def __str__(self):
         if self.value == 0:

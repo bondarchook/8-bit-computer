@@ -21,14 +21,17 @@ class MicrocodeGenerator:
         self.signals = spec.control_signals
 
     def generate(self):
-        print("Generating ROM in '{}' name: {}".format(self.output_directory, self.base_filename))
+        print(f"Generating ROM in '{self.output_directory}' name: {self.base_filename}")
         op_index = 0
         for operation in self.spec.operations:
-            print("\n{} ({})".format(operation.name, op_index))
+            print(f"\n{operation.name} ({op_index})")
             step_index = 0
+
             if self.spec.fetch_sequence is not None:
                 step_index = self.generate_steps(op_index, step_index, self.spec.fetch_sequence.steps)
+
             step_index = self.generate_steps(op_index, step_index, operation.steps)
+
             if self.spec.end_sequence is not None:
                 self.generate_steps(op_index, step_index, self.spec.end_sequence.steps)
             op_index += 1

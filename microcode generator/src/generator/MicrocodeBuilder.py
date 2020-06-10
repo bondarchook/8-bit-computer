@@ -47,6 +47,7 @@ class MicrocodeBuilder:
         if not os.path.exists(self.output_directory):
             os.makedirs(self.output_directory, exist_ok=True)
 
+        print(f"Creating ROM file {full_file_name}")
         file = open(full_file_name, "wb")
         file.write(bytes(data))
         file.close()

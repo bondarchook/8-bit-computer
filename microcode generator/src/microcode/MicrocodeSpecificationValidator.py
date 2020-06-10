@@ -24,6 +24,4 @@ class MicrocodeSpecificationValidator:
             for sig in step.control_word:
                 sig_index += 1
                 if not (sig in available_control_signals):
-                    raise ValueError(
-                        '{}[{}, {}] -> "{}" Unexpected control signal.'.format(operation.name, step_index, sig_index,
-                                                                               sig))
+                    raise ValueError(f'{operation.name}[{step_index}, {sig_index}] -> "{sig}" Unexpected control signal.')

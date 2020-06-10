@@ -31,7 +31,7 @@ class MicrocodeSpecificationLoader:
         for i in range(0, len(control_signals)):
             value = pow(2, i)
             self.microcode_specification.control_signals[control_signals[i]] = value
-            print('  %s -> %s (%i)' % (control_signals[i].rjust(3), "{0:018b}".format(value), value))
+            print(f'  {control_signals[i].rjust(3)} -> {value:018b} ({value})')
 
     def load_fetch_sequence(self, doc):
         print("\nFetch sequence:")
@@ -49,7 +49,7 @@ class MicrocodeSpecificationLoader:
         print("\nOperations:")
         operations = doc.get("operations")
         for op_name in operations:
-            print("%s:" % op_name)
+            print(f"{op_name}:")
             operation = self.load_operation(operations[op_name], op_name)
             self.microcode_specification.operations.append(operation)
 
@@ -66,7 +66,7 @@ class MicrocodeSpecificationLoader:
             self.parse_flags(step, str(s[0]))
             for sig in s[1:]:
                 step.add_control_signal(sig)
-            print('    {}'.format(str(step)))
+            print(f'    {str(step)}')
         return operation
 
     @staticmethod

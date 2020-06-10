@@ -14,4 +14,4 @@ class Operation:
         self.steps.append(step)
 
     def __str__(self):
-        return '{}: {}'.format(self.name, self.steps.count())
+        return f'{self.name}: {self.steps.count()}'
