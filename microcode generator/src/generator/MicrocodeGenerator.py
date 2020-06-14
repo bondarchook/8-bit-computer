@@ -28,19 +28,20 @@ class MicrocodeGenerator:
             step_index = 0
 
             if self.spec.fetch_sequence is not None:
-                step_index = self.generate_steps(op_index, step_index, self.spec.fetch_sequence.steps)
+                step_index = self.generate_steps(op_index, step_index, self.spec.fetch_sequence.steps, "f")
 
-            step_index = self.generate_steps(op_index, step_index, operation.steps)
+            step_index = self.generate_steps(op_index, step_index, operation.steps, " ")
 
             if self.spec.end_sequence is not None:
-                self.generate_steps(op_index, step_index, self.spec.end_sequence.steps)
+                self.generate_steps(op_index, step_index, self.spec.end_sequence.steps, "e")
             op_index += 1
+        print("\n")
         self.builder.write()
 
-    def generate_steps(self, op_index, step_index, steps):
+    def generate_steps(self, op_index, step_index, steps, prefix):
         for step in steps:
             control_word = self.calculate_control_word(step)
-            self.expand_steps(step, step_index, op_index, control_word)
+            self.expand_steps(step, step_index, op_index, control_word, prefix)
             step_index += 1
         return step_index
 
@@ -50,13 +51,13 @@ class MicrocodeGenerator:
             control_word += self.signals[sig]
         return control_word
 
-    def expand_steps(self, step, step_index, op_index, control_word):
+    def expand_steps(self, step, step_index, op_index, control_word, prefix):
         for zf in self.flag_to_range(step.z_flag):
             for cf in self.flag_to_range(step.c_flag):
                 for nf in self.flag_to_range(step.n_flag):
                     flags = (zf << 2) + (cf << 1) + nf
                     self.builder.set_value(step_index, flags, op_index, control_word)
-                    self.print(step_index, flags, op_index, control_word)
+                    self.print(step_index, flags, op_index, control_word, prefix)
 
     @staticmethod
     def flag_to_range(flag: FlagsState):
@@ -67,10 +68,10 @@ class MicrocodeGenerator:
         if flag == FlagsState.ANY:
             return [0, 1]
 
-    def print(self, step_index, flags, op_index, control_word):
+    def print(self, step_index, flags, op_index, control_word, prefix):
         address = self._address_calculator.calculate_address(step_index, flags, op_index)
         a = (control_word & 0b000000000000000011111111) >> 0
         b = (control_word & 0b000000001111111100000000) >> 8
         c = (control_word & 0b111111110000000000000000) >> 16
-        print("{0:07b} {1:03b} {2:03b} ({3: 4X}) -> {4:018b} [{5:2X} {6:2X} {7:2X}] ({8:5X})"
-              .format(op_index, flags, step_index, address, control_word, a, b, c, control_word))
+        print("{0} {1:07b} {2:03b} {3:03b} ({4: 4X}) -> {5:018b} [{6:2X} {7:2X} {8:2X}] ({9:5X})"
+              .format(prefix, op_index, flags, step_index, address, control_word, a, b, c, control_word))
