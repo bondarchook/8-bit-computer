@@ -1,0 +1,33 @@
+---
+control-signals:
+  HLT: 0   # Halt
+  MAI: 1   # Memory address in
+  MPI: 2   # Memory page in
+  MRW: 3   # Memory Read/Write
+  ME:  4   # Memory enable
+  II:  5   # Instruction in
+  CE:  6   # Counter enable
+  CO:  7   # Counter out
+  J:   8   # Jump
+  SU:  9   # Subtract
+  RO:  10  # ALU out
+  FI:  11  # Flags in
+  OI:  12  # Out in
+  AI:  13  # A reg in
+  AO:  14  # A reg out
+  BI:  15  # B reg in
+  BO:  16  # B reg out
+  SCR: 17  # Step counter reset
+
+fetch-sequence:
+
+operations:
+  D0:
+    - [XXX, CE, CO]
+    - [XXX, CE, CO, II, AI, BI]
+  D1:
+    - [XXX, CE, CO, AI, MAI, MPI, FI]
+    - [XXX, CO, AI, MAI, MPI, FI]
+    - [XXX, SCR]
+
+end-sequence:

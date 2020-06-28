@@ -27,7 +27,7 @@ if not os.path.exists(out_directory):
     os.makedirs(out_directory, exist_ok=True)
 
 if not base_name:
-    base_name = "rom.hex"
+    base_name = "rom"
 
 print(f'Specification file: {spec_filename}')
 print(f'Output directory  : {out_directory}')
